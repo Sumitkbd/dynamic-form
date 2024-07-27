@@ -1,0 +1,39 @@
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!--dealer-->
+
+    <label>Dealer : </label>
+    <select formControlName="dealer">
+      <option *ngFor="let dealer of dealerList" [value]="dealer.id">{{ dealer.name }}</option>
+    </select>
+
+
+    <!--manufacturer-->
+    <div *ngFor="let control of controls">
+      <div *ngIf="control.type === 'text'">
+        <label>{{ control.description }}</label>
+        <input type="text" formControlName="manufacturer" />
+        <div *ngIf="form.get('manufacturer')?.invalid && form.get('manufacturer')?.touched">
+          Manufacturer is required
+        </div>
+      </div>
+      <!--country-->
+      <div *ngIf="control.type === 'dropdown' && control.description === 'Country'">
+        <label>{{ control.description }}</label>
+        <select formControlName="country" (change)="onCountryChange($event)">
+          <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
+        </select>
+      </div>
+      <!--State-->
+      <div *ngIf="control.type === 'dropdown' && control.description === 'State'">
+        <label>{{ control.description }}</label>
+        <input type="text" (input)="filterStates($event)" placeholder="Search states" />
+        <select formControlName="state">
+          <option *ngFor="let state of filteredStates" [value]="state.id">{{ state.name }}</option>
+        </select>
+      </div>
+    </div>
+    <!--submit-->
+    <button type="submit">Submit</button>
+  </form>
+</div>

@@ -1,0 +1,28 @@
+[
+    {
+        "Code": 1,
+        "ControlLabel": "Dealer",
+        "ControlType": "DropdownList",
+	"MaxLength":50
+	
+    },
+    {
+        "Code": 2,
+        "ControlLabel": "State",
+        "ControlType": "DropdownList",
+	"MaxLength":30
+    },
+  
+    {
+        "Code": 3,
+        "ControlLabel": "Manufacturer",
+        "ControlType": "InputBox",
+	"MaxLength":50
+    },
+    {
+        "Code": 4,
+        "ControlLabel": "Service Provider",
+        "ControlType": "InputBox",
+	"MaxLength":50
+    }
+]

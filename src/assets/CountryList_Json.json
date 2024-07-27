@@ -1,0 +1,22 @@
+[
+    {
+        "Code": 1,
+        "CountryName": "India",
+        "CountryCode": "+91"
+    },
+    {
+        "Code": 2,
+        "CountryName": "Albania",
+        "CountryCode": "+355"
+    },
+    {
+        "Code": 3,
+        "CountryName": "Belgium",
+        "CountryCode": "+32"
+    },
+    {
+        "Code": 4,
+        "CountryName": "China",
+        "CountryCode": "+86"
+    }
+]

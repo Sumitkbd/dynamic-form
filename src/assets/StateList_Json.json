@@ -1,0 +1,195 @@
+[
+    {
+        "Code": 1,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Andaman and Nicobar Islands"
+    },
+    {
+        "Code": 2,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Andhra Pradesh"
+    },
+    {
+        "Code": 3,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Arunachal Pradesh"
+    },
+    {
+        "Code": 4,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Assam"
+    },
+    {
+        "Code": 5,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Bihar"
+    },
+    {
+        "Code": 6,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Chandigarh"
+    },
+    {
+        "Code": 7,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Chhattisgarh"
+    },
+    {
+        "Code": 8,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "DADRA AND NAGAR HAVELI AND DAMAN AND DIU"
+    },
+    {
+        "Code": 9,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Daman and Diu"
+    },
+    {
+        "Code": 10,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Delhi"
+    },
+  
+    {
+        "Code": 11,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Goa"
+    },
+    
+    {
+        "Code": 12,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Gujarat"
+    },
+    {
+        "Code": 13,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Haryana"
+    },
+    {
+        "Code": 14,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Himachal Pradesh"
+    },
+    {
+        "Code": 16,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Jammu and Kashmir"
+    },
+    {
+        "Code": 17,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Jharkhand"
+    },
+   
+    {
+        "Code": 18,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Karnataka"
+    },
+    {
+        "Code": 19,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Kerala"
+    },
+    
+    {
+        "Code": 20,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Lakshadweep"
+    },
+    {
+        "Code": 21,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Madhya Pradesh"
+    },
+    {
+        "Code": 22,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Maharashtra"
+    },
+    {
+        "Code": 23,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Manipur"
+    },
+    {
+        "Code": 24,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Meghalaya"
+    },
+    {
+        "Code": 25,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Mizoram"
+    },
+    {
+        "Code": 26,
+        "CountryMaster_Code": 1,
+        "CountryName": "India",
+        "StateName": "Nagaland"
+    }
+   ,
+    {
+        "Code": 27,
+        "CountryMaster_Code": 2,
+        "CountryName": "Albania",
+        "StateName": "Ballsh"
+    },
+    {
+        "Code": 28,
+        "CountryMaster_Code": 2,
+        "CountryName": "Albania",
+        "StateName": "Gramsh"
+    },
+    {
+        "Code": 29,
+        "CountryMaster_Code": 2,
+        "CountryName": "Albania",
+        "StateName": "Orikum"
+    }
+,
+    {
+        "Code": 30,
+        "CountryMaster_Code": 4,
+        "CountryName": "China",
+        "StateName": "Gansu"
+    },
+    {
+        "Code": 31,
+        "CountryMaster_Code": 4,
+        "CountryName": "China",
+        "StateName": "Shaanxi"
+    },
+    {
+        "Code": 32,
+        "CountryMaster_Code": 4,
+        "CountryName": "China",
+        "StateName": "Zhejiang"
+    }
+
+   ]
