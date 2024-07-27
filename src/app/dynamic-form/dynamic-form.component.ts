@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -31,9 +32,10 @@ export class DynamicFormComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       dealer: [''],
-      manufacturer: ['', Validators.required],
       country: [''],
       state: [''],
+      manufacturer: ['', Validators.required],
+      serviceProvider: ['', Validators.required],
     });
 
     this.dataService.getControlList().subscribe((controls) => {

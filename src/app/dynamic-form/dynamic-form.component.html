@@ -9,9 +9,11 @@
       >
     </select>
 
-    <!--manufacturer-->
     <div *ngFor="let control of controls">
-      <div *ngIf="control.ControlType === 'InputBox'">
+      <!--manufacturer-->
+      <div
+        *ngIf="control.ControlType === 'InputBox' && control.ControlLabel === 'Manufacturer'"
+      >
         <label>{{ control.ControlLabel }}</label>
         <input type="text" formControlName="manufacturer" />
         <div
@@ -20,6 +22,15 @@
           Manufacturer is required
         </div>
       </div>
+
+      <!--Service Provider-->
+      <div
+        *ngIf="control.ControlType === 'InputBox' && control.ControlLabel === 'Service Provider'"
+      >
+        <label>{{ control.ControlLabel }}</label>
+        <input type="text" formControlName="serviceProvider" />
+      </div>
+
       <!--country-->
       <div
         *ngIf="control.ControlType === 'DropdownList' && control.ControlLabel === 'Country'"
