@@ -7,7 +7,7 @@ import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
   standalone: true,
   imports: [RouterOutlet, DynamicFormComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'dynamic-form';

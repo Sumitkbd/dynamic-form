@@ -1,55 +1,34 @@
-
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Control } from './models/control-list.model';
-import { DropdownItem } from './models/dropdown.model';
+import { Observable } from 'rxjs';
+import { Control, Dealer, Country, State } from './models/model';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataService {
-
-  private controlList: Control[] = [
-    { type: 'text', description: 'Manufacturer' },
-    { type: 'dropdown', description: 'Country' },
-    { type: 'dropdown', description: 'State' }
-  ];
-
-  private dealerList: DropdownItem[] = [
-    { id: '1', name: 'Dealer A' },
-    { id: '2', name: 'Dealer B' }
-  ];
-
-  private countryList: DropdownItem[] = [
-    { id: '1', name: 'USA' },
-    { id: '2', name: 'India' }
-  ];
-
-  private stateList: { [key: string]: DropdownItem[] } = {
-    '1': [
-      { id: '1', name: 'California' },
-      { id: '2', name: 'Texas' }
-    ],
-    '2': [
-      { id: '1', name: 'Maharashtra' },
-      { id: '2', name: 'Delhi' }
-    ]
-  };
+  constructor(private http: HttpClient) { }
 
   getControlList(): Observable<Control[]> {
-    return of(this.controlList);
+    return this.http.get<Control[]>(`./assets/ControlList_Json.json`);
   }
 
-  getDealerList(): Observable<DropdownItem[]> {
-    return of(this.dealerList);
+  getDealerList(): Observable<Dealer[]> {
+    return this.http.get<Dealer[]>(`./assets/DealerList_Json.json`);
   }
 
-  getCountryList(): Observable<DropdownItem[]> {
-    return of(this.countryList);
+  getCountryList(): Observable<Country[]> {
+    return this.http.get<Country[]>(`./assets/CountryList_Json.json`);
   }
 
-  getStateList(countryId: string): Observable<DropdownItem[]> {
-    return of(this.stateList[countryId] || []);
+  getStateList(countryId: string): Observable<State[]> {
+    return this.http
+      .get<State[]>(`./assets/StateList_Json.json`)
+      .pipe(
+        map((states: State[]) =>
+          states.filter((state) => state.CountryName === countryId)
+        )
+      );
   }
 }
-
