@@ -1,25 +1,30 @@
-
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { DataService } from '../data.service';
-import { Control } from '../models/control-list.model';
-import { DropdownItem } from '../models/dropdown.model';
+import { Control, Dealer, Country, State } from '../models/model';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-dynamic-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
   templateUrl: './dynamic-form.component.html',
-  styleUrl: './dynamic-form.component.css'
+  styleUrl: './dynamic-form.component.css',
 })
 export class DynamicFormComponent implements OnInit {
   form!: FormGroup;
   controls: Control[] = [];
-  dealerList: DropdownItem[] = [];
-  countries: DropdownItem[] = [];
-  states: DropdownItem[] = [];
-  filteredStates: DropdownItem[] = [];
+  dealerList: Dealer[] = [];
+  countries: Country[] = [];
+  states: State[] = [];
+  filteredStates: State[] = [];
   dealer: any;
 
   constructor(private fb: FormBuilder, private dataService: DataService) { }
@@ -27,27 +32,27 @@ export class DynamicFormComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       dealer: [''],
-      manufacturer: ['', Validators.required],
       country: [''],
-      state: ['']
+      state: [''],
+      manufacturer: ['', Validators.required],
+      serviceProvider: ['', Validators.required],
     });
 
-    this.dataService.getControlList().subscribe(controls => {
+    this.dataService.getControlList().subscribe((controls) => {
       this.controls = controls;
     });
 
-    this.dataService.getDealerList().subscribe(dealerList => {
+    this.dataService.getDealerList().subscribe((dealerList) => {
       this.dealerList = dealerList;
     });
 
-
-    this.dataService.getCountryList().subscribe(countries => {
+    this.dataService.getCountryList().subscribe((countries) => {
       this.countries = countries;
     });
 
-    this.form.get('country')?.valueChanges.subscribe(countryId => {
+    this.form.get('country')?.valueChanges.subscribe((countryId) => {
       if (countryId) {
-        this.dataService.getStateList(countryId).subscribe(states => {
+        this.dataService.getStateList(countryId).subscribe((states) => {
           this.states = states;
           // Reset the state field whenever country changes
           this.form.get('state')?.setValue('');
@@ -58,11 +63,10 @@ export class DynamicFormComponent implements OnInit {
     });
   }
 
-
   onCountryChange(event: any) {
     const countryId = event.target.value;
     if (countryId) {
-      this.dataService.getStateList(countryId).subscribe(states => {
+      this.dataService.getStateList(countryId).subscribe((states) => {
         this.states = states;
         this.filteredStates = states;
       });
@@ -72,25 +76,26 @@ export class DynamicFormComponent implements OnInit {
     }
   }
 
-
   onSubmit() {
     if (this.form.valid) {
       alert(`Submitted: ${JSON.stringify(this.form.value)}`);
     } else {
       alert('Please fill in all required fields.');
     }
-    console.log(this.form.value)
-
-
   }
 
   filterStates(event: any) {
     const query = event.target.value.toLowerCase();
-    this.filteredStates = this.states.filter(state => state.name.toLowerCase().includes(query));
+    this.filteredStates = this.states.filter((state) =>
+      state.StateName.toLowerCase().includes(query)
+    );
     if (this.filteredStates.length === 0) {
-      this.filteredStates.push({ id: '', name: 'The value doesn’t belong to the list' });
+      this.filteredStates.push({
+        Code: 0,
+        StateName: 'The value doesn’t belong to the list',
+        CountryMaster_Code: 0,
+        CountryName: '',
+      });
     }
   }
 }
-
-
