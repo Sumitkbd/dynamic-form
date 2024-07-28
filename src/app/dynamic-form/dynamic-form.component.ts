@@ -9,12 +9,13 @@ import { DataService } from '../data.service';
 import { Control, Dealer, Country, State } from '../models/model';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-
+import { SubmitDialogComponent } from '../submit-dialog/submit-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-dynamic-form',
   standalone: true,
@@ -24,6 +25,8 @@ import { startWith, map } from 'rxjs/operators';
     HttpClientModule,
     MatAutocompleteModule,
     MatInputModule,
+    SubmitDialogComponent,
+    MatButtonModule,
   ],
   templateUrl: './dynamic-form.component.html',
   styleUrl: './dynamic-form.component.css',
@@ -45,7 +48,11 @@ export class DynamicFormComponent implements OnInit {
   displayState: any;
   dealer: any;
 
-  constructor(private fb: FormBuilder, private dataService: DataService) { }
+  constructor(
+    private fb: FormBuilder,
+    private dataService: DataService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -104,9 +111,9 @@ export class DynamicFormComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      alert(`Submitted: ${JSON.stringify(this.form.value)}`);
-    } else {
-      alert('Please fill in all required fields.');
+      this.dialog.open(SubmitDialogComponent, {
+        data: this.form.value,
+      });
     }
   }
 
