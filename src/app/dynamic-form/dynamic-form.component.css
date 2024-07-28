@@ -1,3 +1,17 @@
+/* .container {
+  display: flex;
+  /* flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+} */
+
 .container {
   max-width: 600px;
   margin: 0 auto;
@@ -6,6 +20,9 @@
 form {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 label {
@@ -33,4 +50,9 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
 }

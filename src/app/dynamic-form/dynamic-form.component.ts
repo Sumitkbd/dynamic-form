@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -11,20 +10,39 @@ import { Control, Dealer, Country, State } from '../models/model';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+
 @Component({
   selector: 'app-dynamic-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatAutocompleteModule,
+    MatInputModule,
+  ],
   templateUrl: './dynamic-form.component.html',
   styleUrl: './dynamic-form.component.css',
 })
 export class DynamicFormComponent implements OnInit {
   form!: FormGroup;
   controls: Control[] = [];
+
   dealerList: Dealer[] = [];
+  filteredDealers!: Observable<Dealer[]>;
+  displayDealer: any;
+
   countries: Country[] = [];
+  filteredCountries!: Observable<Country[]>;
+  displayCountry: any;
+
   states: State[] = [];
-  filteredStates: State[] = [];
+  filteredStates!: Observable<State[]>;
+  displayState: any;
   dealer: any;
 
   constructor(private fb: FormBuilder, private dataService: DataService) { }
@@ -35,7 +53,7 @@ export class DynamicFormComponent implements OnInit {
       country: [''],
       state: [''],
       manufacturer: ['', Validators.required],
-      serviceProvider: ['', Validators.required],
+      serviceProvider: [''],
     });
 
     this.dataService.getControlList().subscribe((controls) => {
@@ -44,18 +62,28 @@ export class DynamicFormComponent implements OnInit {
 
     this.dataService.getDealerList().subscribe((dealerList) => {
       this.dealerList = dealerList;
+      this.filteredDealers = this.form.get('dealer')!.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filterDealers(value || ''))
+      );
     });
 
     this.dataService.getCountryList().subscribe((countries) => {
       this.countries = countries;
+      this.filteredCountries = this.form.get('country')!.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filterCountries(value || ''))
+      );
     });
 
     this.form.get('country')?.valueChanges.subscribe((countryId) => {
       if (countryId) {
         this.dataService.getStateList(countryId).subscribe((states) => {
           this.states = states;
-          // Reset the state field whenever country changes
-          this.form.get('state')?.setValue('');
+          this.filteredStates = this.form.get('state')!.valueChanges.pipe(
+            startWith(''),
+            map((value) => this._filterStates(value || ''))
+          );
         });
       } else {
         this.states = [];
@@ -68,11 +96,9 @@ export class DynamicFormComponent implements OnInit {
     if (countryId) {
       this.dataService.getStateList(countryId).subscribe((states) => {
         this.states = states;
-        this.filteredStates = states;
       });
     } else {
       this.states = [];
-      this.filteredStates = [];
     }
   }
 
@@ -84,18 +110,55 @@ export class DynamicFormComponent implements OnInit {
     }
   }
 
-  filterStates(event: any) {
-    const query = event.target.value.toLowerCase();
-    this.filteredStates = this.states.filter((state) =>
-      state.StateName.toLowerCase().includes(query)
+  private _filterDealers(value: string): Dealer[] {
+    const filterValue = value.toLowerCase();
+    const filtered = this.dealerList.filter((dealer) =>
+      dealer.Desp.toLowerCase().includes(filterValue)
     );
-    if (this.filteredStates.length === 0) {
-      this.filteredStates.push({
-        Code: 0,
-        StateName: 'The value doesn’t belong to the list',
-        CountryMaster_Code: 0,
-        CountryName: '',
-      });
+    if (filtered.length === 0) {
+      return [
+        {
+          Code: 0,
+          Desp: 'The value doesn’t belong to the list',
+          ExtraValue: '',
+        },
+      ];
     }
+    return filtered;
+  }
+
+  private _filterCountries(value: string): Country[] {
+    const filterValue = value.toLowerCase();
+    const filtered = this.countries.filter((country) =>
+      country.CountryName.toLowerCase().includes(filterValue)
+    );
+    if (filtered.length === 0) {
+      return [
+        {
+          Code: 0,
+          CountryName: 'The value doesn’t belong to the list',
+          CountryCode: '',
+        },
+      ];
+    }
+    return filtered;
+  }
+
+  private _filterStates(value: string): State[] {
+    const filterValue = value.toLowerCase();
+    const filtered = this.states.filter((state) =>
+      state.StateName.toLowerCase().includes(filterValue)
+    );
+    if (filtered.length === 0) {
+      return [
+        {
+          Code: 0,
+          StateName: 'The value doesn’t belong to the list',
+          CountryMaster_Code: 0,
+          CountryName: '',
+        },
+      ];
+    }
+    return filtered;
   }
 }
