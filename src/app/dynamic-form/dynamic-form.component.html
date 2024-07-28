@@ -1,67 +1,96 @@
 <div class="container">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <!--dealer-->
-
     <label>Dealer : </label>
-    <select formControlName="dealer">
-      <option *ngFor="let dealer of dealerList" [value]="dealer.Desp"
-        >{{ dealer.Desp }}</option
-      >
-    </select>
-
-    <div *ngFor="let control of controls">
-      <!--manufacturer-->
-      <div
-        *ngIf="control.ControlType === 'InputBox' && control.ControlLabel === 'Manufacturer'"
-      >
-        <label>{{ control.ControlLabel }}</label>
-        <input type="text" formControlName="manufacturer" />
-        <div
-          *ngIf="form.get('manufacturer')?.invalid && form.get('manufacturer')?.touched"
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="Search and select dealer"
+        formControlName="dealer"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayDealer">
+        <mat-option
+          *ngFor="let dealer of filteredDealers | async"
+          [value]="dealer.Desp"
         >
-          Manufacturer is required
-        </div>
-      </div>
+          {{ dealer.Desp }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
-      <!--Service Provider-->
-      <div
-        *ngIf="control.ControlType === 'InputBox' && control.ControlLabel === 'Service Provider'"
+    <!--country-->
+    <label>Country : </label>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="Search and select country"
+        formControlName="country"
+        [matAutocomplete]="autoCountry"
+        (change)="onCountryChange($event)"
+      />
+      <mat-autocomplete
+        #autoCountry="matAutocomplete"
+        [displayWith]="displayCountry"
       >
-        <label>{{ control.ControlLabel }}</label>
-        <input type="text" formControlName="serviceProvider" />
-      </div>
+        <mat-option
+          *ngFor="let country of filteredCountries | async"
+          [value]="country.CountryName"
+        >
+          {{ country.CountryName }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
-      <!--country-->
-      <div
-        *ngIf="control.ControlType === 'DropdownList' && control.ControlLabel === 'Country'"
-      >
-        <label>{{ control.ControlLabel }}</label>
-        <select formControlName="country" (change)="onCountryChange($event)">
-          <option
-            *ngFor="let country of countries"
-            [value]="country.CountryName"
-            >{{ country.CountryName }}</option
-          >
-        </select>
-      </div>
-      <!--State-->
+    <!--State-->
+    <div *ngFor="let control of controls">
       <div
         *ngIf="control.ControlType === 'DropdownList' && control.ControlLabel === 'State'"
       >
         <label>{{ control.ControlLabel }}</label>
-        <input
-          type="text"
-          (input)="filterStates($event)"
-          placeholder="Search states"
-        />
-        <select formControlName="state">
-          <option *ngFor="let state of filteredStates" [value]="state.StateName"
-            >{{ state.StateName }}</option
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Search and select state"
+            formControlName="state"
+            [matAutocomplete]="autoState"
+          />
+          <mat-autocomplete
+            #autoState="matAutocomplete"
+            [displayWith]="displayState"
           >
-        </select>
+            <mat-option
+              *ngFor="let state of filteredStates | async"
+              [value]="state.StateName"
+            >
+              {{ state.StateName }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
       </div>
     </div>
-    <!--submit-->
+
+    <!-- Manufacturer -->
+
+    <mat-form-field appearance="fill">
+      <mat-label>Manufacturer</mat-label>
+      <input type="text" matInput formControlName="manufacturer" />
+      <mat-error
+        *ngIf="form.get('manufacturer')?.invalid && form.get('manufacturer')?.touched"
+      >
+        Manufacturer is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Service Provider -->
+    <mat-form-field appearance="fill">
+      <mat-label>Service Provider</mat-label>
+      <input type="text" matInput formControlName="serviceProvider" />
+    </mat-form-field>
+
     <button type="submit">Submit</button>
   </form>
 </div>
